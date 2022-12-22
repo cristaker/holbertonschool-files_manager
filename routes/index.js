@@ -1,12 +1,14 @@
 import express from 'express';
 import AppController from '../controllers/AppController';
-import AuthController from '../controllers/AuthController';
-import FilesController from '../controllers/FilesController';
 import UsersController from '../controllers/UsersController';
+import AuthController from '../controllers/AuthController';
 
-function controllerRouting(app) {
-  const router = express.Router();
+const router = express.Router();
+
+const routeController = (app) => {
   app.use('/', router);
+
+  // App Controller
 
   router.get('/status', (req, res) => {
     AppController.getStatus(req, res);
@@ -32,29 +34,9 @@ function controllerRouting(app) {
     UsersController.getMe(req, res);
   });
 
-  router.post('/files', (req, res) => {
-    FilesController.postUpload(req, res);
-  });
+  // router.post('/files', (req, res) => {
+  //   FilesController.postUpload(req, res);
+  // });
+};
 
-  router.get('/files/:id', (req, res) => {
-    FilesController.getShow(req, res);
-  });
-
-  router.get('/files', (req, res) => {
-    FilesController.getIndex(req, res);
-  });
-
-  router.put('/files/:id/publish', (req, res) => {
-    FilesController.putPublish(req, res);
-  });
-
-  router.put('/files/:id/unpublish', (req, res) => {
-    FilesController.putUnpublish(req, res);
-  });
-
-  router.get('/files/:id/data', (req, res) => {
-    FilesController.getFile(req, res);
-  });
-}
-
-export default controllerRouting;
+export default routeController;
